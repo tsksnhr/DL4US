@@ -22,13 +22,15 @@ def ReLu(x):
 
     return y
 
-x_ = np.arange(-5, 5, 0.01)
-y1 = step_function(x_)
-y2 = sigmoid(x_)
-y3 = ReLu(x_)
+if __name__ == '__main__':
 
-plt.plot(x_, y1, linestyle='--', color='b')
-plt.plot(x_, y2, linestyle=':', color='r')
-plt.plot(x_, y3, color='g')
-#plt.ylim(-0.1,1.1)
-plt.show()
+    x_ = np.arange(-5, 5, 0.01)
+    y1 = step_function(x_)
+    y2 = sigmoid(x_)
+    y3 = ReLu(x_)
+
+    plt.plot(x_, y1, linestyle='--', color='b')
+    plt.plot(x_, y2, linestyle=':', color='r')
+    plt.plot(x_, y3, color='g')
+    #plt.ylim(-0.1,1.1)
+    plt.show()
