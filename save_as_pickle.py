@@ -15,6 +15,9 @@ file_dic['test_labels'] = 't10k-labels-idx1-ubyte.gz'
 datasets_path = os.path.join('C:\\', 'Users', 'toshi', 'Desktop', 'python', 'Learn_DL4US', 'datasets')
 print(datasets_path)
 
+# vacant list for data-size
+data_size = {}
+
 # download files
 for value in file_dic.values():
 
@@ -24,6 +27,18 @@ for value in file_dic.values():
     # open gz file
     with gzip.open(file_path, "rb") as fp:
         data = np.frombuffer(fp.read(), np.uint8)
+        
+#    data_size.append(len(data))
+    data_size[value] = len(data)
 
-    print("size of ", value, "is", len(data))
+print("data size:", data_size)
 
+# data-size verification
+print()
+print(data_size['train-images-idx3-ubyte.gz']//(28**2))
+print(data_size['t10k-images-idx3-ubyte.gz']//(28**2))
+print()
+print(data_size['train-images-idx3-ubyte.gz']%(28**2))
+print(data_size['train-labels-idx1-ubyte.gz']%(28**2))
+print(data_size['t10k-images-idx3-ubyte.gz']%(28**2))
+print(data_size['t10k-labels-idx1-ubyte.gz']%(28**2))
