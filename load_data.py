@@ -64,18 +64,46 @@ def load_mnist_datasets_as_pkl():
     return pkl_datasets
 
 
+def to_one_hot(label):
+
+    temp_label = np.zeros((label.size, 10))
+
+    for i in range(label.size):
+        temp_label[i, label[i]] = 1
+
+    return temp_label
+
+
+def normarize(key):
+
+    pkl_datasets[key] = pkl_datasets[key].astype(np.float32)
+    pkl_datasets[key] /= 255 
+
+    return pkl_datasets[key]
+
+
 if __name__ == "__main__":
 
     pkl_datasets = load_mnist_datasets_as_pkl()
 
     # number of files
+    print("\nnumber of files")
     print(pkl_datasets['train_images'].shape)
     print(pkl_datasets['train_labels'].shape)
     print(pkl_datasets['test_images'].shape)
     print(pkl_datasets['test_labels'].shape)
 
+    # show one-hot-label
+    print("\none-hot-label indicated 8")
+    print(to_one_hot(pkl_datasets['train_labels'])[144])
+
+    # normarized
+    print("\nnormarized image-data")
+    print(normarize("train_images"))
+
     # show graphic
+    print("\ncorrect label is", pkl_datasets["train_labels"][144])
     gra_train_img = pkl_datasets["train_images"][144].reshape((28, 28))
     plt.imshow(gra_train_img)
     plt.show()
-    print("label is", pkl_datasets["train_labels"][144])
+
