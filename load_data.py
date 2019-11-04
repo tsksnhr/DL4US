@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     # show one-hot-label
     print("\none-hot-label indicated 8")
-    print(to_one_hot(pkl_datasets['train_labels'])[144])
+    print(to_one_hot(pkl_datasets['train_labels']))
 
     # normarized
     print("\nnormarized image-data")
