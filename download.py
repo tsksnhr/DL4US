@@ -13,9 +13,8 @@ file_dic['train_labels'] = 'train-labels-idx1-ubyte.gz'
 file_dic['test_images'] = 't10k-images-idx3-ubyte.gz'
 file_dic['test_labels'] = 't10k-labels-idx1-ubyte.gz'
 
-# point directory out (choose your username)
-# datasets_path = os.path.join('C:\\', 'Users', 'toshi', 'Desktop', 'python', 'Learn_DL4US', 'datasets')
-datasets_path = os.path.join('C:\\', 'Users', 'chest', 'Desktop', 'python', 'Learn_DL4US', 'datasets')
+# point directory out
+datasets_path = os.path.join('C:\\', 'Users', 'toshi', 'Desktop', 'python', 'Learn_DL4US', 'datasets')
 print(datasets_path)
 
 # directory is fine, do download
