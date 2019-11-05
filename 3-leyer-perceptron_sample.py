@@ -1,7 +1,7 @@
 # 3 leyer perceptron
 
 import numpy as np
-import oreilly_004
+import step_func
 
 def init_network():
 
@@ -22,10 +22,10 @@ def forward(network, x):
     b1, b2, b3 = network['b1'], network['b2'], network['b3']
 
     y1 = b1+np.dot(x_, W1)
-    z1 = oreilly_004.sigmoid(y1)
+    z1 = step_func.sigmoid(y1)
 
     y2 = b2+np.dot(z1, W2)
-    z2 = oreilly_004.sigmoid(y2)
+    z2 = step_func.sigmoid(y2)
 
     y3 = b3+np.dot(z2, W3)
     z3 = identify_func(y3)
