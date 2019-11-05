@@ -160,21 +160,21 @@ def load_mnist_dataset(one_hot=True, normarize=True, flatten=True):
         pkl_datasets = pickle.load(fp)
 
     if one_hot:
-        to_one_hot(pkl_datasets["train_labels"])
-        to_one_hot(pkl_datasets["test_labels"])
+        pkl_datasets["train_labels"] = to_one_hot(pkl_datasets["train_labels"])
+        pkl_datasets["test_labels"] = to_one_hot(pkl_datasets["test_labels"])
 
-    # Not yet
     if normarize:
-        normarize(pkl_datasets, "train_images")
-        normarize(pkl_datasets, "test_images")
+        for key in ("train_images", "test_images"):
+                
+            pkl_datasets[key] = pkl_datasets[key].astype(np.float32)
+            pkl_datasets[key] /= 255 
 
-    # Not yet
     if flatten:
-        flatten(pkl_datasets, "train_images")
-        flatten(pkl_datasets, "test_images")
+        for key in ("train_images", "test_images"):
+            pkl_datasets[key].reshape(-1, 1, 28, 28)
 
     return (pkl_datasets["train_images"], pkl_datasets["train_labels"]), (pkl_datasets["test_images"], pkl_datasets["test_labels"])
     
 
 if __name__ == "__main__":
-    print(load_mnist_dataset(one_hot=True, normarize=True, flatten=False))    
+    print(load_mnist_dataset(one_hot=True, normarize=True, flatten=True))    
