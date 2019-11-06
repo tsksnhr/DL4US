@@ -4,9 +4,9 @@ import numpy as np
 
 def soft_max(x):
 
-    x_max = max(x)
+    x_max = np.max(x)
     a = np.exp(x-x_max)
-    a_sum = sum(a)
+    a_sum = np.sum(a)
 
     y = a/a_sum
 
