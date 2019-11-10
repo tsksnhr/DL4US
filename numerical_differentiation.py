@@ -11,11 +11,14 @@ def f(x):
 
 if __name__ == "__main__":
 
-    x = np.arange(-2, 5, 0.1)
+    x = np.arange(-2, 10, 0.1)
     y1 = f(x)
-    df = numerical_diff(f, 2)
-    y2 = df*x - 4
+    df1 = numerical_diff(f, 2)
+    df2 = numerical_diff(f, 4)
+    y_1 = df1*x - 4
+    y_2 = df2*x - 16
 
     plt.plot(x, y1)
-    plt.plot(x, y2)
+    plt.plot(x, y_1)
+    plt.plot(x, y_2)
     plt.show()
