@@ -11,13 +11,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # variables
-Hid_dim = 10
+Hid_dim = 5
 look_back = 3
 Drop_out_ratio = 0.5
 Patience = 20
 Val_split = 0.1
 Batch_size = 1024
-Epochs = 100
+Epochs = 500
+Monitor = 'val_acc'
 
 def load_dataset():
     # 学習データ
@@ -54,25 +55,25 @@ model_SRNN.add(SimpleRNN(Hid_dim, input_shape=x_train.shape[1:]))
 model_SRNN.add(Dense(y_train.shape[1], activation='softmax'))
 
 model_SRNN.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-history_SRNN = model_LSTM.fit(x_train, y_train, epochs=Epochs, batch_size=Batch_size, verbose=2, validation_split=Val_split, callbacks=[EarlyStopping(monitor='val_acc', patience=Patience, verbose=1)])
+history_SRNN = model_SRNN.fit(x_train, y_train, epochs=Epochs, batch_size=Batch_size, verbose=2, validation_split=Val_split, callbacks=[EarlyStopping(monitor=Monitor, patience=Patience, verbose=1)])
 
 # LSTM
 model_LSTM = Sequential()
 
-model_LSTM.add(LSTM(Hid_dim, input_shape=x_train.shape[1:], dropout=Drop_out_ratio, recurrent_dropout=Drop_out_ratio, unroll=True))
+model_LSTM.add(LSTM(Hid_dim, input_shape=x_train.shape[1:], dropout=Drop_out_ratio, recurrent_dropout=Drop_out_ratio, unroll=True, use_bias=True))
 model_LSTM.add(Dense(y_train.shape[1], activation='softmax'))
 
 model_LSTM.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-history_LSTM = model_LSTM.fit(x_train, y_train, epochs=Epochs, batch_size=Batch_size, verbose=2, validation_split=Val_split, callbacks=[EarlyStopping(monitor='val_acc', patience=Patience, verbose=1)])
+history_LSTM = model_LSTM.fit(x_train, y_train, epochs=Epochs, batch_size=Batch_size, verbose=2, validation_split=Val_split, callbacks=[EarlyStopping(monitor=Monitor, patience=Patience, verbose=1)])
 
 # GRU
 model_GRU = Sequential()
 
-model_GRU.add(GRU(Hid_dim, input_shape=x_train.shape[1:], dropout=Drop_out_ratio, recurrent_dropout=Drop_out_ratio, unroll=True))
+model_GRU.add(GRU(Hid_dim, input_shape=x_train.shape[1:], dropout=Drop_out_ratio, recurrent_dropout=Drop_out_ratio, unroll=True, use_bias=True))
 model_GRU.add(Dense(y_train.shape[1], activation='softmax'))
 
 model_GRU.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-history_GRU = model_GRU.fit(x_train, y_train, epochs=Epochs, batch_size=Batch_size, verbose=2, validation_split=Val_split, callbacks=[EarlyStopping(monitor='val_acc', patience=Patience, verbose=1)])
+history_GRU = model_GRU.fit(x_train, y_train, epochs=Epochs, batch_size=Batch_size, verbose=2, validation_split=Val_split, callbacks=[EarlyStopping(monitor=Monitor, patience=Patience, verbose=1)])
 
 # ensemble　learning
 
@@ -93,6 +94,10 @@ y_pred = ensembling_soft(models, x_test)
 submission = pd.Series(y_pred, name='label')
 submission.to_csv('/root/userspace/lesson3/submissions/submission.csv', header=True, index_label='id')
 
+# visualization
+plt.hist(y_pred, 5)
+plt.show()
+
 # Plot training & validation accuracy values
 plt.plot(history_SRNN.history['acc'])
 plt.plot(history_SRNN.history['val_acc'])
@@ -103,7 +108,7 @@ plt.plot(history_GRU.history['val_acc'])
 plt.title('Model accuracy')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
-plt.legend(['Train', 'Test','Train', 'Test','Train', 'Test'], loc='upper left')
+plt.legend(['Train_SRNN', 'Test_SRNN', 'Train_LSTN', 'Test_LSTN','Train_GRU', 'Test_GRU'], loc='lower right')
 plt.show()
 
 # Plot training & validation loss values
@@ -116,5 +121,5 @@ plt.plot(history_GRU.history['val_loss'])
 plt.title('Model loss')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
-plt.legend(['Train', 'Test''Train', 'Test','Train', 'Test'], loc='upper left')
+plt.legend(['Train_SRNN', 'Test_SRNN', 'Train_LSTN', 'Test_LSTN','Train_GRU', 'Test_GRU'], loc='upper right')
 plt.show()
