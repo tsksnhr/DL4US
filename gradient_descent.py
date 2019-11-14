@@ -18,15 +18,15 @@ def gradient_descent(f, init_x, lr=0.01, step_num=1000):
 
 if __name__ == "__main__":
 
-    x = [-4, 4]
+    x = [8, 3]
 
     xm = np.arange(-10, 10, 0.1)
     ym = np.arange(-10, 10, 0.1)
 
     def func(x):
-        return x[0]**2+x[1]**2
+        return x[0]**2 + 8*x[0] + x[1]**2
 
-    out, traj = gradient_descent(func, x, lr=0.9)
+    out, traj = gradient_descent(func, x, lr=0.2)
     print(traj)
 
     xmesh, ymesh = np.meshgrid(xm, ym)
