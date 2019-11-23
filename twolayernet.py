@@ -8,9 +8,9 @@ class TwoLayersNet:
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
         self.parameters = {}
         self.parameters["w1"] = weight_init_std*np.random.randn(input_size, hidden_size)
-        self.parameters["b1"] = np.zeros(input_size)
+        self.parameters["b1"] = np.zeros(hidden_size)
         self.parameters["w2"] = weight_init_std*np.random.randn(hidden_size, output_size)
-        self.parameters["b2"] = np.zeros(hidden_size)
+        self.parameters["b2"] = np.zeros(output_size)
 
     def predict(self, x_train):
         w1, w2 = self.parameters["w1"], self.parameters["w2"]
@@ -55,7 +55,7 @@ class TwoLayersNet:
         return grads
 
 if __name__ == "__main__":
-    sample_net = TwoLayersNet(input_size=784, hidden_size=100, output_size=10)
+    sample_net = TwoLayersNet(input_size=784, hidden_size=50, output_size=10)
 
     print(sample_net.parameters["w1"].shape)
     print(sample_net.parameters["w2"].shape)
